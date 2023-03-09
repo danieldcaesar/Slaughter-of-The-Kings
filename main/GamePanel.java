@@ -1,6 +1,10 @@
 package main;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicComboBoxUI.KeyHandler;
+
+import entity.Player;
+
 import java.awt.*;
 import java.io.BufferedInputStream;
 // import java.awt.Image;
@@ -9,7 +13,7 @@ import java.io.BufferedInputStream;
 public class GamePanel extends JPanel implements Runnable{
     final int tileSize = 16;
     final int scale = 3;
-    final int scaledTile = tileSize*scale;
+    public final int scaledTile = tileSize*scale;
 
     final int maxScreenCol = 16;
     final int maxScreenRow = 12;
@@ -21,15 +25,14 @@ public class GamePanel extends JPanel implements Runnable{
 
     // BufferedImage image;
 
-    int playerX=100;
-    int playerY=100;
-    int playerSpeed=5;
     KeyManager keyHandler = new KeyManager();
+    Player Abraham = new Player(this, keyHandler);;
 
     public GamePanel(){
         setPreferredSize(new Dimension(screenWidth, screenHeight));
         setBackground(Color.black);
         setDoubleBuffered(true);
+
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
 
@@ -65,32 +68,15 @@ public class GamePanel extends JPanel implements Runnable{
         
     }
     public void update(){
-        if (keyHandler.upPressed == true) {
-            playerY -= playerSpeed;
-        }
-        else if (keyHandler.downPressed == true) {
-            playerY += playerSpeed;
-        }
-        else if (keyHandler.leftPressed == true) {
-            playerX -= playerSpeed;
-        }
-        else if (keyHandler.rightPressed == true) {
-            playerX += playerSpeed;
-        }
+        Abraham.update();
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-
-        g2.setColor(Color.white);
-        g2.fillRect(playerX, playerY, scaledTile, scaledTile);
-
-
+        Abraham.draw(g2);
 
         g2.dispose();
-        
-
     }
 
     
