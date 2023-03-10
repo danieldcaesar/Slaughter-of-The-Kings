@@ -5,6 +5,8 @@ import java.awt.Image;
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
 
@@ -24,10 +26,18 @@ public class ImageManager {
 
 	public static BufferedImage loadBufferedImage(String filename) {
 		BufferedImage bi = null;
-
+		FileInputStream fis = null;
 		File file = new File (filename);
+			if(!file.exists()) System.out.println("file "+filename+" failed.");
 		try {
-			bi = ImageIO.read(file);
+			fis = new FileInputStream(file);
+		} catch (FileNotFoundException e) {
+			System.err.println(e);
+		}
+		
+
+		try {
+			bi = ImageIO.read(fis);
 		}
 		catch (IOException ioe) {
 			System.out.println ("Error opening file " + filename + ":" + ioe);
