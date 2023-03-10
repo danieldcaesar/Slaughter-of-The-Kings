@@ -20,7 +20,7 @@ public class TileManager {
         panel = gp;
 
         tile = new Tile[20];
-        mapTileNum = new int[panel.maxWorldCol][gp.maxWorldRow];
+        mapTileNum = new int[panel.maxWorldCol][panel.maxWorldRow];
         getTileImage();
         loadMap("maps/world01.txt");
     }
@@ -82,15 +82,15 @@ public class TileManager {
             int col = 0;
             int row = 0;
 
-            while(col < panel.maxScreenCol && row < panel.maxScreenRow){
+            while(col < panel.maxWorldCol && row < panel.maxWorldRow){
                 String line = br.readLine();
-                while(col< panel.maxScreenCol){
+                while(col< panel.maxWorldCol){
                     String numbers[] = line.split(" ");
                     int num = Integer.parseInt(numbers[col]);
                     mapTileNum[col][row] = num;
                     col++;
                 }
-                if(col == panel.maxScreenCol){
+                if(col == panel.maxWorldCol){
                     col = 0;
                     row++;
                 }
@@ -103,20 +103,25 @@ public class TileManager {
     public void draw(Graphics2D g2){
         int col = 0;
         int row = 0;
-        int x = 0;
-        int y = 0;
 
-        while(col < panel.maxScreenCol && row < panel.maxScreenRow){
+        while(col < panel.maxWorldCol && row < panel.maxWorldRow){
             int tileNum = mapTileNum[col][row];
-            g2.drawImage(tile[tileNum].image, x, y, panel.scaledTile, panel.scaledTile, null);
-            col++;
-            x += panel.scaledTile;
 
-            if(col==panel.maxScreenCol){
+            int worldX = col * panel.scaledTile;
+            int worldY = row * panel.scaledTile;
+            int screenX = worldX - panel.Abraham.worldX + panel.Abraham.screenX;
+            int screenY = worldY - panel.Abraham.worldY + panel.Abraham.screenY;
+
+            if(worldX + panel.scaledTile > panel.Abraham.worldX - panel.Abraham.screenX && worldX - panel.scaledTile < panel.Abraham.worldX + panel.Abraham.screenX && worldY + panel.scaledTile > panel.Abraham.worldY - panel.Abraham.screenY && worldY  - panel.scaledTile< panel.Abraham.worldY + panel.Abraham.screenY){
+                g2.drawImage(tile[tileNum].image, screenX, screenY, panel.scaledTile, panel.scaledTile, null);
+            }
+
+            
+            col++;
+
+            if(col==panel.maxWorldCol){
                 col=0;
-                x=0;
                 row++;
-                y += panel.scaledTile;
             }
         }
     }

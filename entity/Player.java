@@ -34,7 +34,7 @@ public class Player extends Entity {
         getPlayerImage();
     }
     public void setDefaultValues(){
-        worldX = panel.scaledTile * 14;
+        worldX = panel.scaledTile * 12;
         worldY = panel.scaledTile * 16;
         speed = 3;
         direction = "down";
