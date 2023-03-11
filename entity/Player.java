@@ -28,7 +28,7 @@ public class Player extends Entity {
         screenX = panel.screenWidth/2 - (panel.scaledTile/2);
         screenY = panel.screenHeight/2 - (panel.scaledTile/2);
 
-        solidArea = new Rectangle(16, 32, panel.scaledTile, panel.scaledTile);
+        solidArea = new Rectangle(16, 32, 64, 64);
 
         setDefaultValues();
         getPlayerImage();
@@ -133,6 +133,6 @@ public class Player extends Entity {
             default:
                 break;
         }
-        g2.drawImage(image, screenX, screenY, 80, 80, null);
+        g2.drawImage(image, screenX, screenY, 96, 96, null);
     }
 }

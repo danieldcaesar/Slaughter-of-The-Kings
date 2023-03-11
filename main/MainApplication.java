@@ -18,6 +18,8 @@ public class MainApplication {
         window.pack();
         window.setLocationRelativeTo(null);
         window.setVisible(true);
+
+        gamePanel.setItems();
         gamePanel.startThread();
     }
     

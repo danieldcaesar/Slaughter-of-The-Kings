@@ -3,6 +3,7 @@ package main;
 import javax.swing.*;
 
 import entity.Player;
+import item.Item;
 import tile.TileManager;
 
 import java.awt.*;
@@ -31,8 +32,10 @@ public class GamePanel extends JPanel implements Runnable{
     
 
     public CollisionManager coManager = new CollisionManager(this);
+    public ItemManager itemManager = new ItemManager(this);
     TileManager tileManager = new TileManager(this);
     KeyManager keyHandler = new KeyManager();
+    public Item items[] = new Item[10];
     public Player Abraham = new Player(this, keyHandler);
 
     public GamePanel(){
@@ -44,6 +47,10 @@ public class GamePanel extends JPanel implements Runnable{
         this.setFocusable(true);
 
         // image = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_RGB);
+    }
+
+    public void setItems(){
+        itemManager.setObject();
     }
 
     public void startThread(){
@@ -82,6 +89,13 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D) g;
 
         tileManager.draw(g2);
+
+        for(int i=0; i<items.length; i++){
+            if(items[i] != null){
+                items[i].draw(g2, this);
+            }
+        }
+
         Abraham.draw(g2);
 
         g2.dispose();
