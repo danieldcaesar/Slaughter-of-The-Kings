@@ -11,7 +11,7 @@ import java.awt.*;
 // import java.awt.image.BufferedImage;
 
 public class GamePanel extends JPanel implements Runnable{
-    final int tileSize = 16;
+    public final int tileSize = 16;
     final int scale = 3;
     public final int scaledTile = tileSize*scale;
 

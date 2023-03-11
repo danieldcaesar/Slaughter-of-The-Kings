@@ -28,15 +28,15 @@ public class Player extends Entity {
         screenX = panel.screenWidth/2 - (panel.scaledTile/2);
         screenY = panel.screenHeight/2 - (panel.scaledTile/2);
 
-        solidArea = new Rectangle(16, 32, 16, 16);
+        solidArea = new Rectangle(16, 32, panel.scaledTile, panel.scaledTile);
 
         setDefaultValues();
         getPlayerImage();
     }
     public void setDefaultValues(){
-        worldX = panel.scaledTile * 12;
-        worldY = panel.scaledTile * 16;
-        speed = 3;
+        worldX = panel.scaledTile * 16;
+        worldY = panel.scaledTile * 10;
+        speed = 5;
         direction = "down";
     }
     public void getPlayerImage(){
@@ -49,42 +49,34 @@ public class Player extends Entity {
         left2 = ImageManager.loadBufferedImage("sprites/characters/player/left-2.png");
         right2 = ImageManager.loadBufferedImage("sprites/characters/player/right-2.png");
         
-        // try {
-        //     up1 = ImageIO.read(getClass().getClassLoader().getResource("sprites/characters/player/up-1.png"));
-        //     up2 = ImageIO.read(getClass().getClassLoader().getResource("sprites/characters/player/up-2.png"));
-        //     down1 = ImageIO.read(getClass().getClassLoader().getResource("sprites/characters/player/down-1.png"));
-        //     down2 = ImageIO.read(getClass().getClassLoader().getResource("sprites/characters/player/down-2.png"));
-        //     left1 = ImageIO.read(getClass().getClassLoader().getResource("sprites/characters/player/left-1.png"));
-        //     left2 = ImageIO.read(getClass().getClassLoader().getResource("sprites/characters/player/left-2.png"));
-        //     right1 = ImageIO.read(getClass().getClassLoader().getResource("sprites/characters/player/right-1.png"));
-        //     right2 = ImageIO.read(getClass().getClassLoader().getResource("sprites/characters/player/right-2.png"));
-
-
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
     }
     public void update(){
         if(keyHandler.upPressed == true || keyHandler.downPressed == true || keyHandler.leftPressed == true || keyHandler.rightPressed == true){
             if (keyHandler.upPressed == true) {
                 direction = "up";
-                worldY -= speed;
             }
             else if (keyHandler.downPressed == true) {
                 direction = "down";
-                worldY += speed;
             }
             else if (keyHandler.leftPressed == true) {
                 direction = "left";
-                worldX -= speed;
             }
             else if (keyHandler.rightPressed == true) {
                 direction = "right";
-                worldX += speed;
             }
 
             collisionOn = false;
             panel.coManager.checkTile(this);
+
+            if(collisionOn == false){
+                switch (direction) {
+                    case "up": worldY -= speed; break;
+                    case "down": worldY += speed; break;
+                    case "left": worldX -= speed; break;
+                    case "right": worldX += speed; break;
+                    default:                       break;
+                }
+            }
 
             spriteCounter++;
             if(spriteCounter > 15){
@@ -141,6 +133,6 @@ public class Player extends Entity {
             default:
                 break;
         }
-        g2.drawImage(image, screenX, screenY, 64, 64, null);
+        g2.drawImage(image, screenX, screenY, 80, 80, null);
     }
 }

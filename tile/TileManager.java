@@ -13,8 +13,8 @@ import java.awt.Graphics2D;
 
 public class TileManager {
     GamePanel panel;
-    Tile tile[];
-    int mapTileNum[][];
+    public Tile tile[];
+    public int mapTileNum[][];
 
     public TileManager(GamePanel gp){
         panel = gp;
@@ -41,7 +41,7 @@ public class TileManager {
 
         tile[4] = new Tile();
         tile[4].image = ImageManager.loadBufferedImage("sprites/tiles/path-top-2.png");
-
+        
         tile[5] = new Tile();
         tile[5].image = ImageManager.loadBufferedImage("sprites/tiles/path-bottom-1.png");
 
@@ -113,6 +113,7 @@ public class TileManager {
             int screenY = worldY - panel.Abraham.worldY + panel.Abraham.screenY;
 
             if(worldX + panel.scaledTile > panel.Abraham.worldX - panel.Abraham.screenX && worldX - panel.scaledTile < panel.Abraham.worldX + panel.Abraham.screenX && worldY + panel.scaledTile > panel.Abraham.worldY - panel.Abraham.screenY && worldY  - panel.scaledTile< panel.Abraham.worldY + panel.Abraham.screenY){
+                // ensures only tiles around player within screen radius are drawn
                 g2.drawImage(tile[tileNum].image, screenX, screenY, panel.scaledTile, panel.scaledTile, null);
             }
 
