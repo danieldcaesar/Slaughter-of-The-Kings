@@ -17,6 +17,7 @@ import java.awt.Rectangle;
 public class Player extends Entity {
     GamePanel panel;
     KeyManager keyHandler;
+    public int score=0;
 
     public final int screenX;
     public final int screenY;
@@ -29,6 +30,8 @@ public class Player extends Entity {
         screenY = panel.screenHeight/2 - (panel.scaledTile/2);
 
         solidArea = new Rectangle(16, 32, 64, 64);
+        solidAreaX = solidArea.x;
+        solidAreaY = solidArea.y;
 
         setDefaultValues();
         getPlayerImage();
@@ -67,6 +70,8 @@ public class Player extends Entity {
 
             collisionOn = false;
             panel.coManager.checkTile(this);
+            int itemIndex = panel.coManager.checkObject(this, true);
+            collectItem(itemIndex);
 
             if(collisionOn == false){
                 switch (direction) {
@@ -91,6 +96,32 @@ public class Player extends Entity {
         }
         
     }
+
+    public void collectItem(int index){
+        if(index != 99){
+            String itemName = panel.items[index].name;
+
+            switch (itemName) {
+                case "emerald":
+                    score += 100;
+                    panel.items[index] = null;
+                    System.out.println("Score: "+score);
+                    break;
+                case "ruby":
+                    score += 200;
+                    panel.items[index] = null;
+                    System.out.println("Score: "+score);
+                    break;
+                case "chest":
+                    panel.items[index] = null;
+                    break;
+                default:
+                    break;
+            }
+            
+        }
+    }
+
     public void draw(Graphics2D g2){
         // g2.setColor(Color.white);
         // g2.fillRect(x, y, panel.scaledTile, panel.scaledTile);

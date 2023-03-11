@@ -61,4 +61,80 @@ public class CollisionManager {
                 break;
         }
     }
+
+    public int checkObject(Entity ent, boolean player){
+        int index = 99;
+
+        for(int i=0; i<panel.items.length; i++){
+            if(panel.items[i] != null){
+                ent.solidArea.x += ent.worldX;
+                ent.solidArea.y += ent.worldY;
+
+                panel.items[i].solidArea.x += panel.items[i].worldX;
+                panel.items[i].solidArea.y += panel.items[i].worldY;
+
+                switch(ent.direction){
+                    case "up":{
+                        ent.solidArea.y -= ent.speed;
+                        if(ent.solidArea.intersects(panel.items[i].solidArea)){
+                            if(panel.items[i].collision == true){
+                                ent.collisionOn = true;
+                            }
+                            if(player == true){
+                                index = i;
+                            }
+                        }
+                    }
+                        
+                    case "down":{
+                        ent.solidArea.y -= ent.speed;
+                        if(ent.solidArea.intersects(panel.items[i].solidArea)){
+                            if(panel.items[i].collision == true){
+                                ent.collisionOn = true;
+                            }
+                            if(player == true){
+                                index = i;
+                            }
+                        }
+                        break;
+                    }
+                        
+                    case "left":{
+                        ent.solidArea.y -= ent.speed;
+                        if(ent.solidArea.intersects(panel.items[i].solidArea)){
+                            if(panel.items[i].collision == true){
+                                ent.collisionOn = true;
+                            }
+                            if(player == true){
+                                index = i;
+                            }
+                        }
+                        break;
+                    }
+                        
+                    case "right":{
+                        ent.solidArea.y -= ent.speed;
+                        if(ent.solidArea.intersects(panel.items[i].solidArea)){
+                            if(panel.items[i].collision == true){
+                                ent.collisionOn = true;
+                            }
+                            if(player == true){
+                                index = i;
+                            }
+                        }
+                        break;
+                    }
+                        
+                    default: break;
+                    
+                }
+                ent.solidArea.x = ent.solidAreaX;
+                ent.solidArea.y = ent.solidAreaY;
+                panel.items[i].solidArea.x = panel.items[i].solidAreaX;
+                panel.items[i].solidArea.y = panel.items[i].solidAreaY;
+            }
+        }
+
+        return index;
+    }
 }
