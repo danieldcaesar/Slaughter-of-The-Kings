@@ -105,14 +105,17 @@ public class Player extends Entity {
                 case "emerald":
                     score += 100;
                     panel.items[index] = null;
+                    panel.playCollectSFX();
                     System.out.println("Score: "+score);
                     break;
                 case "ruby":
                     score += 200;
                     panel.items[index] = null;
+                    panel.playCollectSFX();
                     System.out.println("Score: "+score);
                     break;
                 case "chest":
+                    panel.playBlipSFX();
                     panel.items[index] = null;
                     break;
                 default:

@@ -31,6 +31,7 @@ public class GamePanel extends JPanel implements Runnable{
     final int FPS=60;
     
 
+    SoundManager soundManager  = SoundManager.getInstance();;
     public CollisionManager coManager = new CollisionManager(this);
     public ItemManager itemManager = new ItemManager(this);
     TileManager tileManager = new TileManager(this);
@@ -46,7 +47,6 @@ public class GamePanel extends JPanel implements Runnable{
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
 
-        // image = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_RGB);
     }
 
     public void setItems(){
@@ -100,6 +100,17 @@ public class GamePanel extends JPanel implements Runnable{
 
         g2.dispose();
     }
-
+    public void playBGM(){
+        soundManager.playClip("background", true);
+    }
+    public void playPowerupSFX(){
+        soundManager.playClip("powerup", false);
+    }
+    public void playCollectSFX(){
+        soundManager.playClip("coin", false);
+    }
+    public void playBlipSFX(){
+        soundManager.playClip("blip", false);
+    }
     
 }
